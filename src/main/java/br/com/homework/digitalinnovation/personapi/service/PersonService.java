@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.homework.digitalinnovation.personapi.dto.request.PersonDTO;
 import br.com.homework.digitalinnovation.personapi.dto.response.MessageResponseDTO;
 import br.com.homework.digitalinnovation.personapi.entity.Person;
+import br.com.homework.digitalinnovation.personapi.exception.PersonNotFoundException;
 import br.com.homework.digitalinnovation.personapi.mapper.PersonMapper;
 import br.com.homework.digitalinnovation.personapi.repository.PersonRepository;
 
@@ -33,5 +34,10 @@ public class PersonService {
 	public List<PersonDTO> listAll() {
 		List<Person> allPeople = personRepository.findAll();
 		return allPeople.stream().map(personMapper::toDTO).collect(Collectors.toList());
+	}
+
+	public PersonDTO findById(Long id) throws PersonNotFoundException{
+		Person optPerson = personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
+		return personMapper.toDTO(optPerson);
 	}
 }
