@@ -14,18 +14,15 @@ import br.com.homework.digitalinnovation.personapi.entity.Person;
 import br.com.homework.digitalinnovation.personapi.exception.PersonNotFoundException;
 import br.com.homework.digitalinnovation.personapi.mapper.PersonMapper;
 import br.com.homework.digitalinnovation.personapi.repository.PersonRepository;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 
 	private PersonRepository personRepository;
 
 	private final PersonMapper personMapper = PersonMapper.INSTANCE;
-	
-	@Autowired
-	public PersonService(PersonRepository personRepository) {
-		this.personRepository = personRepository;
-	}
 	
 	public MessageResponseDTO createPerson(PersonDTO personDto) {
 		Person personToSave = personMapper.toModel(personDto);
